@@ -16,4 +16,13 @@ describe('the list path', {:type => :feature}) do
     expect(page).to have_content('New List:')
   end
 
+  it('allow the user to click on a specific list and view its tasks') do
+    visit('/')
+    click_on('Add a list')
+    fill_in('new_list',  :with => 'Groceries')
+    click_button('Add')
+    click_link('Groceries')
+    expect(page).to have_content('Groceries')
+  end
+
 end

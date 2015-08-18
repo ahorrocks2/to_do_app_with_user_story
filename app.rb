@@ -20,9 +20,23 @@ get('/list_form') do
   erb(:list_form)
 end
 
+get('/list/:id') do
+  @list = List.find(params.fetch("id").to_i)
+  erb(:task_form)
+end
+
 post('/list/new') do
   list_name = params.fetch("new_list")
   list = List.new({:name => list_name, :id => nil})
   list.save()
-  reroute('/list')
+  redirect('/list')
+end
+
+post('/task/new') do
+  @list = List.find(params.fetch("list_id").to_i)
+  task_description = params.fetch("new_task")
+  list_id = params.fetch("list_id")
+  task = Task.new({:description => task_description, :list_id => list_id})
+  task.save()
+  redirect('/list/' + @list.id().to_s())
 end

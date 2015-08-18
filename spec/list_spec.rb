@@ -32,5 +32,14 @@ describe(List) do
     end
   end
 
+  describe("#tasks") do
+    it("pull out tasks based on a specific list id") do
+      test_list1 = List.new({:name => "One", :id => nil})
+      test_list1.save()
+      test_task1 = Task.new({:description => "Test Task", :list_id => test_list1.id()})
+      test_task1.save()
+      expect(test_list1.tasks()).to(eq([test_task1]))
+    end
+  end
 
 end
